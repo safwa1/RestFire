@@ -64,6 +64,13 @@ public class RestFireBaseController<T> : BaseController<T>
             ? response.ResponseText.MapTo<T>()
             : default;
     }
+    
+    public async Task<bool> DeleteAsync(T entry)
+    {
+        var delete = await DeleteByIdAsync(GetEntityId(entry));
+        if (delete) Emit(DbActionType.Delete, entry);
+        return delete;
+    }
 
     public async Task<bool> DeleteAsync(string id)
     {
