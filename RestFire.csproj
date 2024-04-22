@@ -34,6 +34,7 @@
         <WarningLevel>4</WarningLevel>
     </PropertyGroup>
     <ItemGroup>
+        <Reference Include="Microsoft.CSharp" />
         <Reference Include="mscorlib" />
         <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
           <HintPath>packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -69,6 +70,10 @@
         <Reference Include="System.Xml"/>
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="Attribute\CollectionAttribute.cs" />
+        <Compile Include="Attribute\ExplicitKeyAttribute.cs" />
+        <Compile Include="Attribute\KeyAttribute.cs" />
+        <Compile Include="Attribute\WriteAttribute.cs" />
         <Compile Include="Http\Axios.cs" />
         <Compile Include="Http\Controllers\AuthController.cs" />
         <Compile Include="Http\Controllers\BaseController.cs" />
@@ -82,9 +87,11 @@
         <Compile Include="Types\Id.cs" />
         <Compile Include="Types\InfoStore.cs" />
         <Compile Include="Types\IValueObject.cs" />
+        <Compile Include="Types\Model.cs" />
         <Compile Include="Types\Response.cs" />
         <Compile Include="Types\AuthenticationState.cs" />
         <Compile Include="Types\ValidationResult.cs" />
+        <Compile Include="Utils\AttributesUtils.cs" />
         <Compile Include="Utils\Extensions.cs" />
         <Compile Include="Utils\IsExternalInit.cs" />
     </ItemGroup>

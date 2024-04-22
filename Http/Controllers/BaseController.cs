@@ -1,5 +1,6 @@
 ﻿using System;
 using RestFire.Types;
+using RestFire.Utils;
 
 namespace RestFire.Http.Controllers;
 
@@ -30,6 +31,21 @@ public abstract class BaseController<T>
 
         // Implement logic to handle cases where the ID cannot be retrieved
         // You may throw an exception or handle it based on your requirements
-        throw new InvalidOperationException("Unable to determine entity ID.");
+        throw new InvalidOperationException("Unable to determine entity Id.");
+    }
+
+    protected static string GetKeyValue(T entity)
+    {
+        var propertyInfo = AttributesUtils.GetSingleKey<T>(nameof(GetKeyValue));
+        if (propertyInfo != null)
+        {
+            var idValue = propertyInfo.GetValue(entity)?.ToString();
+            if (!string.IsNullOrEmpty(idValue))
+            {
+                return idValue;
+            }
+        }
+        
+        throw new InvalidOperationException("Unable to determine entity Id.");
     }
 }

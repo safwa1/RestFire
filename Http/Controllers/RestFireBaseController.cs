@@ -13,9 +13,9 @@ public class RestFireBaseController<T> : BaseController<T>
     private readonly FirebaseDatabase _firebaseDatabase = FirebaseDatabase.Instance;
     private static bool HasAccessToken => !string.IsNullOrEmpty(InfoStore.Shared.AccessToken);
 
-    public RestFireBaseController(string collectionName)
+    public RestFireBaseController(string collectionName = null)
     {
-        _collectionName = collectionName;
+        _collectionName = collectionName ?? AttributesUtils.GetCollectionName(typeof(T));
         _firebaseDatabase.SetDatabaseName(InfoStore.Shared.DatabaseName);
         if (HasAccessToken)
         {
@@ -67,7 +67,7 @@ public class RestFireBaseController<T> : BaseController<T>
     
     public async Task<bool> DeleteAsync(T entry)
     {
-        var delete = await DeleteByIdAsync(GetEntityId(entry));
+        var delete = await DeleteByIdAsync(GetKeyValue(entry));
         if (delete) Emit(DbActionType.Delete, entry);
         return delete;
     }
@@ -83,8 +83,8 @@ public class RestFireBaseController<T> : BaseController<T>
     public async Task<T> InsertAsync(T entity)
     {
         var url = HasAccessToken
-            ? $"{_collectionName}/{GetEntityId(entity)}.json?auth={_token}"
-            : $"{_collectionName}/{GetEntityId(entity)}.json";
+            ? $"{_collectionName}/{GetKeyValue(entity)}.json?auth={_token}"
+            : $"{_collectionName}/{GetKeyValue(entity)}.json";
         var response = await _firebaseDatabase.GetDatabase().PutAsync(
             url,
             entity.ToJson()
@@ -102,8 +102,8 @@ public class RestFireBaseController<T> : BaseController<T>
     public async Task<bool> UpdateAsync(T entity)
     {
         var url = HasAccessToken
-            ? $"{_collectionName}/{GetEntityId(entity)}.json?auth={_token}"
-            : $"{_collectionName}/{GetEntityId(entity)}.json";
+            ? $"{_collectionName}/{GetKeyValue(entity)}.json?auth={_token}"
+            : $"{_collectionName}/{GetKeyValue(entity)}.json";
         var response = await _firebaseDatabase.GetDatabase().PutAsync(
             url,
             JsonConvert.SerializeObject(entity)

@@ -95,4 +95,9 @@ public static class Extensions
 
         return sanitizedString.ToString();
     }
+    
+    public static List<T> AsList<T>(this IEnumerable<T>? source)
+    {
+        return source == null ? (List<T>) null : (source is List<T> objList ? objList : source.ToList<T>());
+    }
 }
