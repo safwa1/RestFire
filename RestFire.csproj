@@ -36,7 +36,7 @@
     <ItemGroup>
         <Reference Include="mscorlib" />
         <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-          <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+          <HintPath>packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
         </Reference>
         <Reference Include="System"/>
         <Reference Include="System.ComponentModel.Composition" />
@@ -69,13 +69,11 @@
         <Reference Include="System.Xml"/>
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="Extensions.cs" />
         <Compile Include="Http\Axios.cs" />
         <Compile Include="Http\Controllers\AuthController.cs" />
         <Compile Include="Http\Controllers\BaseController.cs" />
         <Compile Include="Http\Controllers\RestFireBaseController.cs" />
         <Compile Include="Http\FirebaseDatabase.cs" />
-        <Compile Include="IsExternalInit.cs" />
         <Compile Include="Properties\AssemblyInfo.cs"/>
         <Compile Include="RestFireApp.cs" />
         <Compile Include="Types\Credentials.cs" />
@@ -87,6 +85,8 @@
         <Compile Include="Types\Response.cs" />
         <Compile Include="Types\AuthenticationState.cs" />
         <Compile Include="Types\ValidationResult.cs" />
+        <Compile Include="Utils\Extensions.cs" />
+        <Compile Include="Utils\IsExternalInit.cs" />
     </ItemGroup>
     <ItemGroup>
       <None Include="packages.config" />

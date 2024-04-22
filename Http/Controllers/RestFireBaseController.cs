@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using RestFire.Types;
+using RestFire.Utils;
 
 namespace RestFire.Http.Controllers;
 
