@@ -23,7 +23,8 @@ public static class Extensions
 
             if (pairValue == null) continue;
             var item = pairValue.ToObject<T>();
-            item?.GetType().GetProperty("Id")?.SetValue(item, key);
+            // item?.GetType().GetProperty("Id")?.SetValue(item, key);
+            AttributesUtils.GetSingleKey(item?.GetType())?.SetValue(item, key);
             if (item != null) recordsList.Add(item);
         }
 
@@ -41,7 +42,7 @@ public static class Extensions
         if (entry.Value == null) return null!;
 
         // Assuming the dictionary key is a property of the value type
-        PropertyInfo keyProperty = typeof(TValue).GetProperty("Id") ?? throw new InvalidOperationException();
+        PropertyInfo keyProperty = AttributesUtils.GetSingleKey<TValue>(nameof(To)) ?? throw new InvalidOperationException();
         keyProperty.SetValue(entry.Value, entry.Key);
 
         return entry.Value;
@@ -58,7 +59,7 @@ public static class Extensions
         if (entry.Value == null) return default!;
 
         // If T has a property named 'Id', set its value to the key
-        var idProperty = typeof(T).GetProperty("Id");
+        var idProperty =  AttributesUtils.GetSingleKey<T>(nameof(ToObject));//typeof(T).GetProperty("Id");
         if (idProperty != null && idProperty.CanWrite)
         {
             idProperty.SetValue(entry.Value, Convert.ChangeType(entry.Key, idProperty.PropertyType));

@@ -101,6 +101,13 @@ public static class AttributesUtils
         return keys.Count > 0 ? keys[0] : throw new DataException($"{method}<T> only supports an entity with a [Key] property");
     }
     
+    public static PropertyInfo GetSingleKey(Type type)
+    {
+        var keys = KeyPropertiesCache(type);
+
+        return keys.Count > 0 ? keys[0] : throw new DataException($"only supports an entity with a [Key] property");
+    }
+    
     private static KeyAttribute GetKeyAttribute(PropertyInfo property)
     {
         KeyAttribute keyAttribute = (KeyAttribute)property.GetCustomAttribute(typeof(KeyAttribute));
