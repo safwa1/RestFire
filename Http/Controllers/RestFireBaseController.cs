@@ -48,8 +48,6 @@ public class RestFireBaseController<T> : BaseController<T>
             url
         );
 
-        // fix Possible null reference return
-
         return response.IsSuccess
             ? response.ResponseText.ToObject<T>()
             : default;

@@ -43,14 +43,14 @@ public sealed class AuthController
         return response;
     }
 
-    public async Task<bool> Register(string email, string password)
+    public async Task<bool> SignupAsync(string email, string password)
     {
         var response = await UseAuth(RestFireApp.SignupBaseUrl + _apiKey, email, password);
         var signup = response.ResponseText.Contains("kind");
         return signup;
     }
 
-    public async Task<AuthenticationState> SignIn(string email, string password)
+    public async Task<AuthenticationState> SigninAsync(string email, string password)
     {
         var response = await UseAuth(RestFireApp.SigninBaseUrl + _apiKey, email, password);
         var jsonResponse = response.ResponseText;
@@ -69,15 +69,15 @@ public sealed class AuthController
         return state;
     }
 
-    public async Task<bool> DeleteAccount(string email, string password)
+    public async Task<bool> DeleteAccountAsync(string email, string password)
     {
-        var response = await SignIn(email, password);
+        var response = await SigninAsync(email, password);
         if (!response.Success) return false;
-        var deleted = await DeleteAccount(response.AccessToken);
+        var deleted = await DeleteAccountAsync(response.AccessToken);
         return deleted;
     }
 
-    public async Task<bool> DeleteAccount(string accessToken)
+    public async Task<bool> DeleteAccountAsync(string accessToken)
     {
         var delete = await _axios.PostAsync(
             RestFireApp.DeleteAccountUrl + _apiKey,
