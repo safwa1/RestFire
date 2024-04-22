@@ -35,8 +35,27 @@ RestFire is a streamlined library designed to simplify interactions with Firebas
 
   2. Usage Without Authentication:
     * Instantiate a `RestFireBaseController` for a specific collection:
+
       ```csharp
-      var sellersController = new RestFireBaseController<Seller>("Sellers");
+      using RestFire.Attribute;
+
+     [Collection(collectionName: "Sellers")]
+     public sealed record Seller
+     {
+         [Key]
+         public string Id { get; set; }
+         public string FullName { get; set; }
+         public string Email { get; set; }
+         public string Phone { get; set; }
+         public string Password { get; set; }
+         public string Balance { get; set; }
+         public string CreatedAt { get; set; }
+         public bool IsActive { get; set; }
+     }
+      ```
+
+      ```csharp
+      var sellersController = new RestFireBaseController<Seller>();
 
       // Retrieve All
       var sellers = await sellersController.GetAllAsync();
@@ -59,7 +78,6 @@ RestFire is a streamlined library designed to simplify interactions with Firebas
       // Delete by Object
       var deleteResultByObject = await sellersController.DeleteAsync(sellerToDelete);
       ```
-      
 <hr>
 
 
@@ -71,7 +89,7 @@ RestFire is a streamlined library designed to simplify interactions with Firebas
       if (signInResult.Success)
       {
           // Access authorized collections here
-          var customersController = new RestFireBaseController<Customer>("Customers");
+          var customersController = new RestFireBaseController<Customer>();
       
           var customer = await customersController.DeleteAsync("CUSTOMER_ID");
           Console.WriteLine(customer);
